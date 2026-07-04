@@ -38,7 +38,12 @@ export function LoginForm({
         password,
       });
       if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
+  const callback = new URLSearchParams(window.location.search).get('callback');
+  const { data } = await supabase.auth.getSession()
+  const refreshToken = data.session?.refresh_token
+if (callback && refreshToken) {
+  window.location.href = `${callback}?token=${refreshToken}`
+}
       router.push("/protected");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
