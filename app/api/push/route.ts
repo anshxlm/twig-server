@@ -79,14 +79,14 @@ export async function POST(request: NextRequest) {
 
 
 
-    const objects = sqlData.objects.map(object => ({
+    const objects = sqlData.objects.map((object: { hash: any; type: any; data: any; }) => ({
     repository_id: repositoryId,
     hash: object.hash,
     type: object.type,
     data: object.data
 }));
 
-const branches = sqlData.branches.map(branch => ({
+const branches = sqlData.branches.map((branch: { name: any; commit_hash: any; }) => ({
     repository_id: repositoryId,
     name: branch.name,
     commit_hash: branch.commit_hash
