@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   if (error || !data.user) {
     return Response.json({ error: "Invalid or expired session" }, { status: 401 });
   }
-
+  
   const userId = data.user.id;
   console.log(`${userId} uploading`);
 
