@@ -80,11 +80,8 @@ for (const object of objects) {
   const { error: objectError } = await supabase
     .from("objects")
     .insert(object);
-  
 
 }
-
-
 
     const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=twigcli;AccountKey=5t980nuGurYYG0SUP8NM3REXr8kFFaga+U+ETVFxC83EgyeAPap/glFPNHZZ728BWk0FkqM80Q5K+AStortvyw==;EndpointSuffix=core.windows.net"
 
