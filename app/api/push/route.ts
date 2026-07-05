@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const files = formData.getAll("files") as File[];
     const name = formData.get("name") as string
+    const local = formData.get("local_id") as string
     //@ts-ignore
     const sqlData = JSON.parse(formData.get("sql"))
     let repositoryId
@@ -39,18 +40,32 @@ export async function POST(request: NextRequest) {
     .select("*")
     .eq("owner_id", userId)
     .eq("name", name)
+    .eq("local_id", local)
     .maybeSingle();
+    
 
     if (repoExists) {
       repositoryId = repoExists.id;
     } else {
 
+
+     const { data: nameExists } = await supabase
+    .from("repos")
+    .select("*")
+    .eq("owner_id", userId)
+    .eq("name", name)
+    .maybeSingle();
+
+  if (nameExists){
+    return Response.json({ error: "Upload failed: Duplicate project name" }, { status: 500 });
+  } else {
       
     const { data: NewRepo, error } = await supabase
     .from("repos")
     .insert({
         owner_id:userId,
         name: name,
+        local_id: local,
     })
     .select()
     .single();
@@ -59,7 +74,9 @@ export async function POST(request: NextRequest) {
 
     repositoryId = NewRepo.id;
 
+  }
     }
+
 
 
     const objects = sqlData.objects.map(object => ({
