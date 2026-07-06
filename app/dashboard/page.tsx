@@ -13,7 +13,7 @@ async function UserDetails() {
   }
 
  // const { data:allRepos, error:repoError} 
- const {data:repos, error:repoError} = await supabase.from('repos').select("*")
+ const {data:repos, error:repoError} = await supabase.from('repos').select("*").eq("owner_id", data.claims.sub)
   return (
   <div>
   {repos!.map((repo, index) =>(
