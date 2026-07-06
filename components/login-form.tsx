@@ -44,7 +44,7 @@ export function LoginForm({
 if (callback && refreshToken) {
   window.location.href = `${callback}?token=${refreshToken}`
 }
-      router.push("/protected");
+      router.push("/dashboard");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
