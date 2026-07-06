@@ -98,8 +98,6 @@ const branches = sqlData.branches.map((branch: { name: any; commit_hash: any; })
 
 if (objectError) console.log(objectError);
 
-
-
   //console.log(branch)
   const { error: branchError } = await supabase
     .from("branches")
