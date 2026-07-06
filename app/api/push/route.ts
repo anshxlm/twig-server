@@ -100,6 +100,21 @@ for (const object of objects) {
 
 }
 
+
+for (const branch of branches) {
+
+  //console.log(branch)
+  const { error: objectError } = await supabase
+    .from("branches")
+    .upsert(branch, {
+        onConflict: "repository_id,name"
+    });
+
+if (objectError) console.log(objectError);
+
+}
+
+
     const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=twigcli;AccountKey=5t980nuGurYYG0SUP8NM3REXr8kFFaga+U+ETVFxC83EgyeAPap/glFPNHZZ728BWk0FkqM80Q5K+AStortvyw==;EndpointSuffix=core.windows.net"
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(
