@@ -92,27 +92,23 @@ const branches = sqlData.branches.map((branch: { name: any; commit_hash: any; })
     commit_hash: branch.commit_hash
 }));
 
-for (const object of objects) {
-
   const { error: objectError } = await supabase
     .from("objects")
-    .insert(object);
-
-}
-
-
-for (const branch of branches) {
-
-  //console.log(branch)
-  const { error: objectError } = await supabase
-    .from("branches")
-    .upsert(branch, {
-        onConflict: "repository_id,name"
-    });
+    .insert(objects);
 
 if (objectError) console.log(objectError);
 
-}
+
+
+  //console.log(branch)
+  const { error: branchError } = await supabase
+    .from("branches")
+    .upsert(branches, {
+        onConflict: "repository_id,name"
+    });
+
+if (branchError) console.log(branchError);
+
 
 
     const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=twigcli;AccountKey=5t980nuGurYYG0SUP8NM3REXr8kFFaga+U+ETVFxC83EgyeAPap/glFPNHZZ728BWk0FkqM80Q5K+AStortvyw==;EndpointSuffix=core.windows.net"
