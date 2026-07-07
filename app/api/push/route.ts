@@ -94,7 +94,7 @@ const branches = sqlData.branches.map((branch: { name: any; commit_hash: any; })
 
   const { error: objectError } = await supabase
     .from("objects")
-    .insert(objects);
+    .upsert(objects);
 
 if (objectError) console.log(objectError);
 
