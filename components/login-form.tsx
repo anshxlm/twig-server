@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSearchParams } from 'next/navigation'
 
 export function LoginForm({
   className,
@@ -25,6 +26,7 @@ export function LoginForm({
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,6 +108,8 @@ if (callback && refreshToken) {
               >
                 Sign up
               </Link>
+              <br></br><br></br>
+              <a href={searchParams.get('callback') + '?token=FATAL'} className="mt-4 text-center text-lg font-bold text-red-700 hover:text-red-500">{searchParams.get('callback') ? "Cancel CLI login":""}</a>
             </div>
           </form>
         </CardContent>
