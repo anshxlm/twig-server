@@ -12,7 +12,6 @@ async function UserDetails() {
     redirect("/auth/login");
   }
 
- // const { data:allRepos, error:repoError} 
  const {data:repos, error:repoError} = await supabase.from('repos').select("*").eq("owner_id", data.claims.sub)
   return (
   <div>
