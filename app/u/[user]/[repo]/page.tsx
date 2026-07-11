@@ -23,7 +23,7 @@ async function UserDetails({ paramsPromise }: { paramsPromise: PageProps["params
   return (
     <div>
      {branches!.map((branch, index) =>(
-    <a href={"/user/am/" + repo + '/' + branch.name} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+    <a href={"/u/am/" + repo + '/' + branch.name} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     • {branch.name} <br></br>
   </a>
   ))}  

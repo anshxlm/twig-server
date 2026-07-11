@@ -61,7 +61,7 @@ if (!commit){
     <div>
             <h1>{currentPath}</h1>
      {historyArr!.map((commit, index) =>(
-    <a href={"/user/am/" + repo + '/' + branch + '/' + commit.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+    <a href={"/u/am/" + repo + '/' + branch + '/' + commit.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     • {commit.message} <br></br>
   </a>
   ))}  
@@ -94,7 +94,7 @@ if (!commit){
   return (
     <div>
       {guiArray.map((item, index) =>(
-         <a href={item.type == "tree" ? "/user/am/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/user/am/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+         <a href={item.type == "tree" ? "/u/am/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/u/am/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     {item.type == "tree" ? "> ":"• "}{item.name} <br></br>
   </a>
       ))}
@@ -149,7 +149,7 @@ return (<pre className="text-[12px] font-mono p-4 rounded-md border border-[#d0d
   return (
     <div>
       {guiArray.map((item, index) =>(
-         <a href={item.type == "tree" ? "/user/am/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/user/am/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+         <a href={item.type == "tree" ? "/u/am/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/u/am/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     {item.type == "tree" ? "> ":"• "} {item.name} <br></br>
   </a>
       ))}
