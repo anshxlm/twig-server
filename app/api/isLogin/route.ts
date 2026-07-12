@@ -1,7 +1,5 @@
 import { NextRequest } from "next/server";
 import { createClient } from '@supabase/supabase-js';
-import { put } from "@vercel/blob"
-import { BlobServiceClient } from '@azure/storage-blob'
 
 const supabase = createClient(
    process.env.NEXT_PUBLIC_SUPABASE_URL!,
