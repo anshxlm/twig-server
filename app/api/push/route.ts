@@ -21,9 +21,6 @@ export async function POST(request: NextRequest) {
   }
 
   const userId = data.user.id;
-  console.log(`${userId} uploading`);
-
-
   try {
     const formData = await request.formData();
     const files = formData.getAll("files") as File[];
