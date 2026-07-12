@@ -38,12 +38,10 @@ export async function POST(request: NextRequest) {
     .eq("name", name)
     .eq("local_id", local)
     .maybeSingle();
-    
-
+  
     if (repoExists) {
       repositoryId = repoExists.id;
     } else {
-
 
      const { data: nameExists } = await supabase
     .from("repos")
@@ -73,8 +71,6 @@ export async function POST(request: NextRequest) {
   }
     }
 
-
-
     const objects = sqlData.objects.map((object: { hash: any; type: any; data: any; }) => ({
     repository_id: repositoryId,
     hash: object.hash,
@@ -103,9 +99,7 @@ if (objectError) console.log(objectError);
 
 if (branchError) console.log(branchError);
 
-
-
-    const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=twigcli;AccountKey=5t980nuGurYYG0SUP8NM3REXr8kFFaga+U+ETVFxC83EgyeAPap/glFPNHZZ728BWk0FkqM80Q5K+AStortvyw==;EndpointSuffix=core.windows.net"
+const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=twigcli;AccountKey=5t980nuGurYYG0SUP8NM3REXr8kFFaga+U+ETVFxC83EgyeAPap/glFPNHZZ728BWk0FkqM80Q5K+AStortvyw==;EndpointSuffix=core.windows.net"
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(
   AZURE_STORAGE_CONNECTION_STRING
