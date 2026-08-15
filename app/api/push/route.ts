@@ -99,10 +99,10 @@ if (objectError) console.log(objectError);
 
 if (branchError) console.log(branchError);
 
-const AZURE_STORAGE_CONNECTION_STRING = ""
+const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(
-  AZURE_STORAGE_CONNECTION_STRING
+  AZURE_STORAGE_CONNECTION_STRING!
 );
 
 const containerClient = blobServiceClient.getContainerClient('objects');

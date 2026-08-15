@@ -105,10 +105,10 @@ if (!commit){
   
   if (depth?.at(-2) == "file"){
 
-        const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=twigcli;AccountKey=5t980nuGurYYG0SUP8NM3REXr8kFFaga+U+ETVFxC83EgyeAPap/glFPNHZZ728BWk0FkqM80Q5K+AStortvyw==;EndpointSuffix=core.windows.net"
+        const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(
-  AZURE_STORAGE_CONNECTION_STRING
+  AZURE_STORAGE_CONNECTION_STRING!
 );
 
 
