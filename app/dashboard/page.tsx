@@ -16,7 +16,7 @@ async function UserDetails() {
   return (
   <div>
   {repos!.map((repo, index) =>(
-    <a href={"/u/am/" + repo.name} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+    <a href={"/u/" + repo.name} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     • {repo.name} <br></br>
   </a>
   ))}  

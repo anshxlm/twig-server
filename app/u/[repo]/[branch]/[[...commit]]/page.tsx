@@ -21,7 +21,6 @@ async function FileExplorer({ paramsPromise }: { paramsPromise: PageProps["param
 
    const supabase = await createClient();
 
-  // 1. Auth check FIRST
   const { data, error } = await supabase.auth.getClaims();
   if (error || !data?.claims) {
     redirect("/auth/login");
@@ -34,7 +33,6 @@ async function FileExplorer({ paramsPromise }: { paramsPromise: PageProps["param
 
 
   const {data:branches, error:branchError} = await supabase.from('branches').select("*").eq("repository_id", repos[0].id).eq("name", branch)
-  console.log(branches![0].commit_hash)
   let hash = branches![0].commit_hash
 
   const historyArr = []; 
@@ -61,7 +59,7 @@ if (!commit){
     <div>
             <h1>{currentPath}</h1>
      {historyArr!.map((commit, index) =>(
-    <a href={"/u/am/" + repo + '/' + branch + '/' + commit.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+    <a href={"/u/" + repo + '/' + branch + '/' + commit.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     • {commit.message} <br></br>
   </a>
   ))}  
@@ -94,7 +92,7 @@ if (!commit){
   return (
     <div>
       {guiArray.map((item, index) =>(
-         <a href={item.type == "tree" ? "/u/am/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/u/am/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+         <a href={item.type == "tree" ? "/u/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/u/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     {item.type == "tree" ? "> ":"• "}{item.name} <br></br>
   </a>
       ))}
@@ -104,6 +102,41 @@ if (!commit){
 
   
   if (depth?.at(-2) == "file"){
+
+    async function verify_ownership(){
+
+      let {data: verification} = await supabase.from('objects').select('*').eq('hash', depth?.at(-3))
+      if (!verification![0]){
+        return false
+      }
+
+      if (verification![0]!.type == "commit"){
+        const content = JSON.parse(verification![0]!.data);
+        ({data: verification} = await supabase.from('objects').select('*').eq('hash', content.tree))
+      }
+
+      const verifyContent = JSON.parse(verification![0]!.data);
+
+      for (const obj of verifyContent){
+        if (obj.hash == depth?.at(-1)) {
+
+          const {data: repo} = await supabase.from('repos').select('*').eq('id', verification![0]!.repository_id)
+          console.log(repo)
+          for (const item of repo!){
+            console.log(item.owner_id)
+            if (item){
+            return true
+          }
+        }
+
+        }
+      }
+
+      return false
+
+    }
+    
+    if (await verify_ownership()){
 
         const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING
 
@@ -129,6 +162,10 @@ const fileContent = await streamToText(downloadBlockBlobResponse.readableStreamB
 
 return (<pre className="text-[12px] font-mono p-4 rounded-md border border-[#d0d7de] bg-grey text-white leading-5 w-full text-left min-h-[50vh] overflow-auto">{fileContent}</pre>)
 
+    } else {
+      return "Not Authorized OR Not Found"
+    }
+
 
   } else {
 
@@ -149,7 +186,7 @@ return (<pre className="text-[12px] font-mono p-4 rounded-md border border-[#d0d
   return (
     <div>
       {guiArray.map((item, index) =>(
-         <a href={item.type == "tree" ? "/u/am/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/u/am/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
+         <a href={item.type == "tree" ? "/u/" + repo + '/' + branch + '/' + currentPath + '/' + item.hash : "/u/" + repo + '/' + branch + '/' + currentPath + '/file/' + item.hash} key={index} className="text-purple-500 text-xl font-bold hover:text-indigo-500 text-xl font-bold ">
     {item.type == "tree" ? "> ":"• "} {item.name} <br></br>
   </a>
       ))}
