@@ -6,6 +6,8 @@ You can host this yourself by configuring the `.env.example`
 
 ## Example
 
+Note: this is obviously a very small example. Twig server can handle as many branches, commits, and folders/subfolders/files as you like! The client page allows you to view what project directory was like at any commit, just like Github. 
+
 ![cli demo](https://github.com/anshxlm/twig-server/blob/a71c14d45f9f4d3d069f7d2dca31542f114e2dfd/images/twig_server_cli_demo.png)
 
 ![repos screen](https://github.com/anshxlm/twig-server/blob/a71c14d45f9f4d3d069f7d2dca31542f114e2dfd/images/twig_server_repo_screen.png)
